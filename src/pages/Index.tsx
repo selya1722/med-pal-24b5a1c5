@@ -9,11 +9,13 @@ import UserProfile from '@/components/UserProfile';
 import SettingsPage from '@/components/SettingsPage';
 import MedicalHistory from '@/components/MedicalHistory';
 import WelcomeScreen from '@/components/WelcomeScreen';
+import CardiologySpecialists from '@/components/CardiologySpecialists';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('search');
   const [searchQuery, setSearchQuery] = useState('');
   const [showWelcome, setShowWelcome] = useState(true);
+  const [showCardiology, setShowCardiology] = useState(false);
 
   const doctors = [
     {
@@ -55,8 +57,20 @@ const Index = () => {
     setShowWelcome(false);
   };
 
+  const handleCardiologyClick = () => {
+    setShowCardiology(true);
+  };
+
+  const handleBackFromCardiology = () => {
+    setShowCardiology(false);
+  };
+
   if (showWelcome) {
     return <WelcomeScreen onGetStarted={handleGetStarted} />;
+  }
+
+  if (showCardiology) {
+    return <CardiologySpecialists onBack={handleBackFromCardiology} />;
   }
 
   const renderSearchScreen = () => (
@@ -79,13 +93,19 @@ const Index = () => {
       <div className="px-6">
         <h2 className="text-lg font-semibold mb-3 text-gray-800">Popular Specialties</h2>
         <div className="grid grid-cols-2 gap-3">
-          {['Cardiology', 'Dermatology', 'General Medicine', 'Pediatrics'].map((specialty) => (
+          {[
+            { name: 'Cardiology', onClick: handleCardiologyClick },
+            { name: 'Dermatology', onClick: () => {} },
+            { name: 'General Medicine', onClick: () => {} },
+            { name: 'Pediatrics', onClick: () => {} }
+          ].map((specialty) => (
             <Button 
-              key={specialty} 
+              key={specialty.name} 
               variant="outline" 
               className="p-4 h-auto rounded-xl border-blue-200 hover:bg-blue-50"
+              onClick={specialty.onClick}
             >
-              <span className="text-sm font-medium">{specialty}</span>
+              <span className="text-sm font-medium">{specialty.name}</span>
             </Button>
           ))}
         </div>
