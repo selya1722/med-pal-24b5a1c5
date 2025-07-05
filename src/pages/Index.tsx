@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, User, Settings, History, Star, Clock, MapPin, Phone } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,10 +8,12 @@ import { Badge } from '@/components/ui/badge';
 import UserProfile from '@/components/UserProfile';
 import SettingsPage from '@/components/SettingsPage';
 import MedicalHistory from '@/components/MedicalHistory';
+import WelcomeScreen from '@/components/WelcomeScreen';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('search');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showWelcome, setShowWelcome] = useState(true);
 
   const doctors = [
     {
@@ -49,6 +50,14 @@ const Index = () => {
       image: "photo-1594824606853-da95e3fb7b67"
     }
   ];
+
+  const handleGetStarted = () => {
+    setShowWelcome(false);
+  };
+
+  if (showWelcome) {
+    return <WelcomeScreen onGetStarted={handleGetStarted} />;
+  }
 
   const renderSearchScreen = () => (
     <div className="space-y-6">
