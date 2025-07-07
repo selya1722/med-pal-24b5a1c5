@@ -23,8 +23,8 @@ const WelcomeScreen = ({ onGetStarted }: { onGetStarted: () => void }) => {
 
       {/* Main content */}
       <div className="z-10 flex flex-col items-center text-center max-w-sm space-y-8">
-        {/* Logo */}
-        <div className="relative">
+        {/* Logo - centered above */}
+        <div className="flex flex-col items-center">
           <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex items-center justify-center shadow-lg shadow-blue-200/50 mb-6">
             <div className="relative">
               <Heart className="w-10 h-10 text-white fill-white" />
