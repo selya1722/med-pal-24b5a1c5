@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, User, Settings, History, Star, Clock, MapPin, Phone } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,12 +10,15 @@ import SettingsPage from '@/components/SettingsPage';
 import MedicalHistory from '@/components/MedicalHistory';
 import WelcomeScreen from '@/components/WelcomeScreen';
 import CardiologySpecialists from '@/components/CardiologySpecialists';
+import BookingScreen from '@/components/BookingScreen';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('search');
   const [searchQuery, setSearchQuery] = useState('');
   const [showWelcome, setShowWelcome] = useState(true);
   const [showCardiology, setShowCardiology] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   const doctors = [
     {
@@ -66,12 +68,26 @@ const Index = () => {
     setShowCardiology(false);
   };
 
+  const handleBookNow = (doctor) => {
+    setSelectedDoctor(doctor);
+    setShowBooking(true);
+  };
+
+  const handleBackFromBooking = () => {
+    setShowBooking(false);
+    setSelectedDoctor(null);
+  };
+
   if (showWelcome) {
     return <WelcomeScreen onGetStarted={handleGetStarted} />;
   }
 
   if (showCardiology) {
     return <CardiologySpecialists onBack={handleBackFromCardiology} />;
+  }
+
+  if (showBooking && selectedDoctor) {
+    return <BookingScreen doctor={selectedDoctor} onBack={handleBackFromBooking} />;
   }
 
   const renderSearchScreen = () => (
@@ -153,7 +169,11 @@ const Index = () => {
                     <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs flex-shrink-0">
                       {doctor.experience}
                     </Badge>
-                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700 rounded-full px-4 sm:px-6 text-xs sm:text-sm">
+                    <Button 
+                      size="sm" 
+                      className="bg-blue-600 hover:bg-blue-700 rounded-full px-4 sm:px-6 text-xs sm:text-sm"
+                      onClick={() => handleBookNow(doctor)}
+                    >
                       Book Now
                     </Button>
                   </div>
