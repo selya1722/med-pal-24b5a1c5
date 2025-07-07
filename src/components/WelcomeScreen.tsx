@@ -33,10 +33,10 @@ const WelcomeScreen = ({ onGetStarted }: { onGetStarted: () => void }) => {
           </div>
           
           {/* App name */}
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">HealthCare</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Med Pal</h1>
           <div className="flex items-center justify-center space-x-1 mb-6">
             <Shield className="w-4 h-4 text-blue-600" />
-            <span className="text-sm font-medium text-blue-600">Trusted Care</span>
+            <span className="text-sm font-medium text-blue-600">Never Miss a Dose Again</span>
           </div>
         </div>
 
