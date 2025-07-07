@@ -73,43 +73,43 @@ const CardiologySpecialists = ({ onBack }: { onBack: () => void }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-b-3xl">
-        <div className="flex items-center mb-4">
+      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 sm:p-6 rounded-b-2xl sm:rounded-b-3xl">
+        <div className="flex items-center mb-3 sm:mb-4">
           <button 
             onClick={onBack}
-            className="p-2 rounded-full hover:bg-white/10 transition-colors mr-3"
+            className="p-2 rounded-full hover:bg-white/10 transition-colors mr-2 sm:mr-3"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
-          <h1 className="text-2xl font-bold">Cardiology Specialists</h1>
+          <h1 className="text-xl sm:text-2xl font-bold">Cardiology Specialists</h1>
         </div>
-        <p className="text-blue-100 text-sm">Find the best heart care specialists</p>
+        <p className="text-blue-100 text-xs sm:text-sm">Find the best heart care specialists</p>
       </div>
 
       {/* Specialists List */}
-      <div className="px-6 py-6 space-y-4">
+      <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
         {cardiologists.map((doctor) => (
-          <Card key={doctor.id} className="overflow-hidden rounded-2xl shadow-sm border-0 bg-white hover:shadow-md transition-shadow">
-            <CardContent className="p-5">
-              <div className="flex items-start space-x-4">
-                <Avatar className="w-20 h-20 rounded-xl">
+          <Card key={doctor.id} className="overflow-hidden rounded-xl sm:rounded-2xl shadow-sm border-0 bg-white hover:shadow-md transition-shadow">
+            <CardContent className="p-4 sm:p-5">
+              <div className="flex items-start space-x-3 sm:space-x-4">
+                <Avatar className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl flex-shrink-0">
                   <AvatarImage src={`https://images.unsplash.com/${doctor.image}?w=150&h=150&fit=crop&crop=face`} />
-                  <AvatarFallback className="bg-blue-100 text-blue-600 font-semibold rounded-xl text-lg">
+                  <AvatarFallback className="bg-blue-100 text-blue-600 font-semibold rounded-lg sm:rounded-xl text-sm sm:text-lg">
                     {doctor.name.split(' ').map(n => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
                 
                 <div className="flex-1 min-w-0">
                   <div className="mb-2">
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">{doctor.name}</h3>
-                    <p className="text-blue-600 font-medium text-sm">{doctor.credentials}</p>
-                    <p className="text-gray-600 text-sm">{doctor.specialization}</p>
+                    <h3 className="font-semibold text-gray-900 text-base sm:text-lg mb-1 truncate">{doctor.name}</h3>
+                    <p className="text-blue-600 font-medium text-xs sm:text-sm">{doctor.credentials}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm truncate">{doctor.specialization}</p>
                   </div>
                   
-                  <div className="flex items-center space-x-4 mb-3">
+                  <div className="flex items-center space-x-2 sm:space-x-4 mb-2 sm:mb-3">
                     <div className="flex items-center">
-                      <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                      <span className="text-sm font-medium ml-1">{doctor.rating}</span>
+                      <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 fill-current" />
+                      <span className="text-xs sm:text-sm font-medium ml-1">{doctor.rating}</span>
                       <span className="text-xs text-gray-500 ml-1">({doctor.reviews})</span>
                     </div>
                     <Badge variant="secondary" className="bg-blue-50 text-blue-700 text-xs">
@@ -117,24 +117,24 @@ const CardiologySpecialists = ({ onBack }: { onBack: () => void }) => {
                     </Badge>
                   </div>
                   
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Clock className="w-4 h-4 mr-2 text-blue-500" />
-                      <span className={doctor.availability.includes('Available Today') ? 'text-green-600 font-medium' : ''}>
+                  <div className="space-y-1 sm:space-y-2 mb-3 sm:mb-4">
+                    <div className="flex items-center text-xs sm:text-sm text-gray-600">
+                      <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-blue-500 flex-shrink-0" />
+                      <span className={`truncate ${doctor.availability.includes('Available Today') ? 'text-green-600 font-medium' : ''}`}>
                         {doctor.availability}
                       </span>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <MapPin className="w-4 h-4 mr-2 text-blue-500" />
-                      <span>{doctor.location}</span>
+                    <div className="flex items-center text-xs sm:text-sm text-gray-600">
+                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-blue-500 flex-shrink-0" />
+                      <span className="truncate">{doctor.location}</span>
                     </div>
                   </div>
                   
                   <Button 
-                    className="w-full bg-blue-600 hover:bg-blue-700 rounded-xl font-medium"
+                    className="w-full bg-blue-600 hover:bg-blue-700 rounded-lg sm:rounded-xl font-medium text-xs sm:text-sm"
                     size="sm"
                   >
-                    <Calendar className="w-4 h-4 mr-2" />
+                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                     Book Appointment
                   </Button>
                 </div>
