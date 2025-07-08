@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, User, Settings, History, Star, Clock, MapPin, Phone } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,6 +20,22 @@ const Index = () => {
   const [showCardiology, setShowCardiology] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
+
+  // Initialize theme on component mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (savedTheme === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, []);
 
   const doctors = [
     {
@@ -110,7 +125,7 @@ const Index = () => {
 
       {/* Quick Categories */}
       <div className="px-4 sm:px-6">
-        <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-800">Popular Specialties</h2>
+        <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-800 dark:text-gray-200">Popular Specialties</h2>
         <div className="grid grid-cols-2 gap-2 sm:gap-3">
           {[
             { name: 'Cardiology', onClick: handleCardiologyClick },
@@ -121,7 +136,7 @@ const Index = () => {
             <Button 
               key={specialty.name} 
               variant="outline" 
-              className="p-3 sm:p-4 h-auto rounded-xl border-blue-200 hover:bg-blue-50 text-xs sm:text-sm"
+              className="p-3 sm:p-4 h-auto rounded-xl border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs sm:text-sm"
               onClick={specialty.onClick}
             >
               <span className="font-medium">{specialty.name}</span>
@@ -132,9 +147,9 @@ const Index = () => {
 
       {/* Doctors List */}
       <div className="px-4 sm:px-6 space-y-3 sm:space-y-4">
-        <h2 className="text-base sm:text-lg font-semibold text-gray-800">Available Doctors</h2>
+        <h2 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">Available Doctors</h2>
         {doctors.map((doctor) => (
-          <Card key={doctor.id} className="overflow-hidden rounded-xl sm:rounded-2xl shadow-sm border-0 bg-white">
+          <Card key={doctor.id} className="overflow-hidden rounded-xl sm:rounded-2xl shadow-sm border-0 bg-white dark:bg-gray-800">
             <CardContent className="p-4 sm:p-5">
               <div className="flex items-start space-x-3 sm:space-x-4">
                 <Avatar className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl flex-shrink-0">
@@ -145,30 +160,30 @@ const Index = () => {
                 </Avatar>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base truncate">{doctor.name}</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1 text-sm sm:text-base truncate">{doctor.name}</h3>
                   <p className="text-blue-600 font-medium text-xs sm:text-sm mb-2">{doctor.specialty}</p>
                   
                   <div className="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-3">
                     <div className="flex items-center">
                       <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 fill-current" />
                       <span className="text-xs sm:text-sm font-medium ml-1">{doctor.rating}</span>
-                      <span className="text-xs text-gray-500 ml-1">({doctor.reviews})</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">({doctor.reviews})</span>
                     </div>
                   </div>
                   
                   <div className="space-y-1 sm:space-y-2">
-                    <div className="flex items-center text-xs sm:text-sm text-gray-600">
+                    <div className="flex items-center text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 flex-shrink-0" />
                       <span className="truncate">{doctor.availability}</span>
                     </div>
-                    <div className="flex items-center text-xs sm:text-sm text-gray-600">
+                    <div className="flex items-center text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 flex-shrink-0" />
                       <span className="truncate">{doctor.location}</span>
                     </div>
                   </div>
                   
                   <div className="flex items-center justify-between mt-3 sm:mt-4 gap-2">
-                    <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs flex-shrink-0">
+                    <Badge variant="secondary" className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-xs flex-shrink-0">
                       {doctor.experience}
                     </Badge>
                     <Button 
@@ -204,14 +219,14 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Main Content */}
       <main className="pb-16 sm:pb-20">
         {renderContent()}
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 sm:px-4 py-1 sm:py-2 safe-area-pb">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 sm:px-4 py-1 sm:py-2 safe-area-pb">
         <div className="flex justify-around items-center max-w-md mx-auto">
           {[
             { id: 'search', icon: Search, label: 'Search' },
@@ -224,8 +239,8 @@ const Index = () => {
               onClick={() => setActiveTab(id)}
               className={`flex flex-col items-center py-1 sm:py-2 px-2 sm:px-4 rounded-lg transition-colors ${
                 activeTab === id 
-                  ? 'text-blue-600 bg-blue-50' 
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/30' 
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
             >
               <Icon className="w-5 h-5 sm:w-6 sm:h-6 mb-1" />

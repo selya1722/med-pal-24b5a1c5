@@ -14,6 +14,24 @@ const SettingsPage = () => {
     security: true
   });
 
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.classList.contains('dark');
+    }
+    return false;
+  });
+
+  const toggleDarkMode = (checked: boolean) => {
+    setDarkMode(checked);
+    if (checked) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
   return (
     <div className="space-y-6 p-6">
       {/* Header */}
@@ -25,17 +43,17 @@ const SettingsPage = () => {
       {/* Notification Settings */}
       <Card className="rounded-2xl shadow-sm border-0">
         <CardHeader>
-          <CardTitle className="flex items-center text-gray-800">
+          <CardTitle className="flex items-center text-gray-800 dark:text-gray-200">
             <Bell className="w-5 h-5 mr-2 text-blue-600" />
             Notification Preferences
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
               <div>
-                <p className="font-medium">Appointment Reminders</p>
-                <p className="text-sm text-gray-500">Get notified about upcoming appointments</p>
+                <p className="font-medium dark:text-gray-200">Appointment Reminders</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Get notified about upcoming appointments</p>
               </div>
               <Switch
                 checked={notifications.appointments}
@@ -45,10 +63,10 @@ const SettingsPage = () => {
               />
             </div>
             
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
               <div>
-                <p className="font-medium">Medication Reminders</p>
-                <p className="text-sm text-gray-500">Daily medication and health reminders</p>
+                <p className="font-medium dark:text-gray-200">Medication Reminders</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Daily medication and health reminders</p>
               </div>
               <Switch
                 checked={notifications.reminders}
@@ -58,10 +76,10 @@ const SettingsPage = () => {
               />
             </div>
             
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
               <div>
-                <p className="font-medium">Marketing Communications</p>
-                <p className="text-sm text-gray-500">Health tips and promotional offers</p>
+                <p className="font-medium dark:text-gray-200">Marketing Communications</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Health tips and promotional offers</p>
               </div>
               <Switch
                 checked={notifications.marketing}
@@ -71,10 +89,10 @@ const SettingsPage = () => {
               />
             </div>
             
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
               <div>
-                <p className="font-medium">Security Alerts</p>
-                <p className="text-sm text-gray-500">Account security and login notifications</p>
+                <p className="font-medium dark:text-gray-200">Security Alerts</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Account security and login notifications</p>
               </div>
               <Switch
                 checked={notifications.security}
@@ -90,17 +108,17 @@ const SettingsPage = () => {
       {/* Language & Region */}
       <Card className="rounded-2xl shadow-sm border-0">
         <CardHeader>
-          <CardTitle className="flex items-center text-gray-800">
+          <CardTitle className="flex items-center text-gray-800 dark:text-gray-200">
             <Globe className="w-5 h-5 mr-2 text-blue-600" />
             Language & Region
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
               <div>
-                <p className="font-medium">Language</p>
-                <p className="text-sm text-gray-500">Choose your preferred language</p>
+                <p className="font-medium dark:text-gray-200">Language</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Choose your preferred language</p>
               </div>
               <Select defaultValue="en">
                 <SelectTrigger className="w-32 border-blue-200">
@@ -115,10 +133,10 @@ const SettingsPage = () => {
               </Select>
             </div>
             
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
               <div>
-                <p className="font-medium">Time Zone</p>
-                <p className="text-sm text-gray-500">Set your local time zone</p>
+                <p className="font-medium dark:text-gray-200">Time Zone</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Set your local time zone</p>
               </div>
               <Select defaultValue="est">
                 <SelectTrigger className="w-32 border-blue-200">
@@ -139,21 +157,21 @@ const SettingsPage = () => {
       {/* Privacy & Security */}
       <Card className="rounded-2xl shadow-sm border-0">
         <CardHeader>
-          <CardTitle className="flex items-center text-gray-800">
+          <CardTitle className="flex items-center text-gray-800 dark:text-gray-200">
             <Shield className="w-5 h-5 mr-2 text-blue-600" />
             Privacy & Security
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50">
+          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20">
             <Lock className="w-4 h-4 mr-3" />
             Two-Factor Authentication
           </Button>
-          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50">
+          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20">
             <Shield className="w-4 h-4 mr-3" />
             Privacy Settings
           </Button>
-          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50">
+          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20">
             <Smartphone className="w-4 h-4 mr-3" />
             Biometric Login
           </Button>
@@ -163,24 +181,24 @@ const SettingsPage = () => {
       {/* App Preferences */}
       <Card className="rounded-2xl shadow-sm border-0">
         <CardHeader>
-          <CardTitle className="flex items-center text-gray-800">
+          <CardTitle className="flex items-center text-gray-800 dark:text-gray-200">
             <Settings className="w-5 h-5 mr-2 text-blue-600" />
             App Preferences
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+          <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
             <div>
-              <p className="font-medium">Dark Mode</p>
-              <p className="text-sm text-gray-500">Switch to dark theme</p>
+              <p className="font-medium dark:text-gray-200">Dark Mode</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Switch to dark theme</p>
             </div>
-            <Switch />
+            <Switch checked={darkMode} onCheckedChange={toggleDarkMode} />
           </div>
           
-          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+          <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
             <div>
-              <p className="font-medium">Auto-sync Data</p>
-              <p className="text-sm text-gray-500">Automatically sync health data</p>
+              <p className="font-medium dark:text-gray-200">Auto-sync Data</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Automatically sync health data</p>
             </div>
             <Switch defaultChecked />
           </div>
@@ -190,22 +208,22 @@ const SettingsPage = () => {
       {/* Support */}
       <Card className="rounded-2xl shadow-sm border-0">
         <CardHeader>
-          <CardTitle className="flex items-center text-gray-800">
+          <CardTitle className="flex items-center text-gray-800 dark:text-gray-200">
             <HelpCircle className="w-5 h-5 mr-2 text-blue-600" />
             Support & Help
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50">
+          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20">
             Help Center
           </Button>
-          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50">
+          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20">
             Contact Support
           </Button>
-          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50">
+          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20">
             Terms of Service
           </Button>
-          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50">
+          <Button variant="outline" className="w-full justify-start rounded-xl border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20">
             Privacy Policy
           </Button>
         </CardContent>
