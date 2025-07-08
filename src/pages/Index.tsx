@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Search, User, Settings, History, Star, Clock, MapPin, Phone } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -5,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { Toaster } from '@/components/ui/toaster';
 import UserProfile from '@/components/UserProfile';
 import SettingsPage from '@/components/SettingsPage';
 import MedicalHistory from '@/components/MedicalHistory';
@@ -232,6 +234,8 @@ const Index = () => {
           ))}
         </div>
       </nav>
+      
+      <Toaster />
     </div>
   );
 };

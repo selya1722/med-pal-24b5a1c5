@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowLeft, Calendar, Clock, MapPin, User, Phone, Mail, CreditCard } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -6,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
 
 interface Doctor {
   id: number;
@@ -31,6 +31,7 @@ const BookingScreen = ({ doctor, onBack }: BookingScreenProps) => {
   const [patientPhone, setPatientPhone] = useState('');
   const [patientEmail, setPatientEmail] = useState('');
   const [reason, setReason] = useState('');
+  const { toast } = useToast();
 
   const availableDates = [
     { date: '2024-01-15', day: 'Mon', dayNum: '15' },
@@ -48,12 +49,23 @@ const BookingScreen = ({ doctor, onBack }: BookingScreenProps) => {
 
   const handleBooking = () => {
     if (!selectedDate || !selectedTime || !patientName || !patientPhone) {
-      alert('Please fill in all required fields');
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields to complete your booking.",
+        variant: "destructive"
+      });
       return;
     }
     
-    alert('Appointment booked successfully! You will receive a confirmation email shortly.');
-    onBack();
+    toast({
+      title: "Appointment Confirmed! ✅",
+      description: `Your appointment with ${doctor.name} has been successfully booked for ${new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} at ${selectedTime}. You will receive a confirmation email shortly.`,
+    });
+    
+    // Reset form after successful booking
+    setTimeout(() => {
+      onBack();
+    }, 2000);
   };
 
   return (
