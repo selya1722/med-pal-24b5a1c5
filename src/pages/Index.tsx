@@ -18,11 +18,11 @@ import SignUp from '@/components/SignUp';
 const Index = () => {
   const [activeTab, setActiveTab] = useState('search');
   const [searchQuery, setSearchQuery] = useState('');
-  const [showWelcome, setShowWelcome] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
   const [showCardiology, setShowCardiology] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(true);
+  const [showSignUp, setShowSignUp] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   // Initialize theme on component mount
@@ -79,6 +79,7 @@ const Index = () => {
 
   const handleGetStarted = () => {
     setShowWelcome(false);
+    setShowSignUp(true);
   };
 
   const handleCardiologyClick = () => {
@@ -124,16 +125,16 @@ const Index = () => {
     setShowSignIn(true);
   };
 
+  if (showWelcome) {
+    return <WelcomeScreen onGetStarted={handleGetStarted} />;
+  }
+
   if (showSignUp) {
     return <SignUp onBack={handleBackFromAuth} onSignInClick={handleSwitchToSignIn} />;
   }
 
   if (showSignIn) {
     return <SignIn onBack={handleBackFromAuth} onSignUpClick={handleSwitchToSignUp} />;
-  }
-
-  if (showWelcome) {
-    return <WelcomeScreen onGetStarted={handleGetStarted} />;
   }
 
   if (showCardiology) {
