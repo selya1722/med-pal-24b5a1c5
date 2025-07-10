@@ -1,12 +1,57 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { User, Phone, Mail, MapPin, Calendar, Heart, Shield } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Calendar, Heart, Shield, LogIn } from 'lucide-react';
 
-const UserProfile = () => {
+interface UserProfileProps {
+  onSignInClick: () => void;
+}
+
+const UserProfile = ({ onSignInClick }: UserProfileProps) => {
+  // Simulate user not being signed in
+  const isSignedIn = false;
+
+  if (!isSignedIn) {
+    return (
+      <div className="p-4 sm:p-6 space-y-6">
+        <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-2xl text-center">
+          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <User className="w-10 h-10 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold mb-2">Welcome to Med Pal</h1>
+          <p className="text-blue-100 mb-6">Sign in to access your profile and medical history</p>
+          <Button
+            onClick={onSignInClick}
+            className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3 rounded-lg shadow-lg"
+          >
+            <LogIn className="w-5 h-5 mr-2" />
+            Sign In
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Card className="border-0 shadow-sm bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20">
+            <CardContent className="p-6 text-center">
+              <Heart className="w-12 h-12 text-green-600 mx-auto mb-3" />
+              <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Health Records</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Track your medical history and appointments</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-sm bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20">
+            <CardContent className="p-6 text-center">
+              <Shield className="w-12 h-12 text-blue-600 mx-auto mb-3" />
+              <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Secure Data</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Your information is protected with encryption</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 p-6">
       {/* Header */}

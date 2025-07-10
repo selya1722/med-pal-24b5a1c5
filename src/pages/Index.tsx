@@ -12,6 +12,8 @@ import MedicalHistory from '@/components/MedicalHistory';
 import WelcomeScreen from '@/components/WelcomeScreen';
 import CardiologySpecialists from '@/components/CardiologySpecialists';
 import BookingScreen from '@/components/BookingScreen';
+import SignIn from '@/components/SignIn';
+import SignUp from '@/components/SignUp';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('search');
@@ -19,6 +21,8 @@ const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [showCardiology, setShowCardiology] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   // Initialize theme on component mount
@@ -95,6 +99,29 @@ const Index = () => {
     setSelectedDoctor(null);
   };
 
+  const handleSignInClick = () => {
+    setShowSignIn(true);
+  };
+
+  const handleSignUpClick = () => {
+    setShowSignUp(true);
+  };
+
+  const handleBackFromAuth = () => {
+    setShowSignIn(false);
+    setShowSignUp(false);
+  };
+
+  const handleSwitchToSignUp = () => {
+    setShowSignIn(false);
+    setShowSignUp(true);
+  };
+
+  const handleSwitchToSignIn = () => {
+    setShowSignUp(false);
+    setShowSignIn(true);
+  };
+
   if (showWelcome) {
     return <WelcomeScreen onGetStarted={handleGetStarted} />;
   }
@@ -105,6 +132,14 @@ const Index = () => {
 
   if (showBooking && selectedDoctor) {
     return <BookingScreen doctor={selectedDoctor} onBack={handleBackFromBooking} />;
+  }
+
+  if (showSignIn) {
+    return <SignIn onBack={handleBackFromAuth} onSignUpClick={handleSwitchToSignUp} />;
+  }
+
+  if (showSignUp) {
+    return <SignUp onBack={handleBackFromAuth} onSignInClick={handleSwitchToSignIn} />;
   }
 
   const renderSearchScreen = () => (
@@ -208,7 +243,7 @@ const Index = () => {
       case 'search':
         return renderSearchScreen();
       case 'profile':
-        return <UserProfile />;
+        return <UserProfile onSignInClick={handleSignInClick} />;
       case 'settings':
         return <SettingsPage />;
       case 'history':
